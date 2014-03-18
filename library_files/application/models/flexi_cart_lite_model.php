@@ -28,15 +28,15 @@
 
 class Flexi_cart_lite_model extends CI_Model
 {	
-	public function __construct()
-	{
-		$this->load->database();
-		$this->load->library('session');
+	
+	public function __initilize( $params ) {
+		$this->cart_session = $params['cart_session'];
 		$this->load->config('flexi_cart', TRUE);
 		$this->lang->load('flexi_cart');
-
+		$this->load->library('flexi_cart_storage',$params);
+		
 		###+++++++++++++++++++++++++++++++++###
-
+		
 		// Cart session contains items, row-summaries, summaries and settings.
 		$this->flexi->cart = $this->config->item('cart','flexi_cart');
 		$this->flexi->cart_columns = array_merge($this->flexi->cart['items']['columns'], $this->flexi->cart['items']['reserved_columns']);
@@ -44,24 +44,25 @@ class Flexi_cart_lite_model extends CI_Model
 		// Cart default values and lookup tables.
 		$this->flexi->cart_defaults = $this->config->item('defaults', 'flexi_cart');
 		$this->flexi->cart_database = $this->config->item('database', 'flexi_cart');
-
+		
 		// Status and error messages.
 		$this->flexi->message_settings = $this->config->item('messages', 'flexi_cart');
 		$this->flexi->status_messages = array('public' => array(), 'admin' => array());
 		$this->flexi->error_messages = array('public' => array(), 'admin' => array());
 		
 		// Get current cart content from session.
-		if ($this->session->userdata($this->flexi->cart['name']) !== FALSE)
+		if ($this->flexi_cart_storage->fetch_cart_data($this->flexi->cart['name']) !== FALSE)
 		{
-			$this->flexi->cart_contents = $this->session->userdata($this->flexi->cart['name']);
+			$this->flexi->cart_contents = $this->flexi_cart_storage->fetch_cart_data($this->flexi->cart['name']);
 		}
 		// Else, load the 'Complete' flexi cart model to set cart defaults.
 		else
 		{
-			$this->load->model('flexi_cart_model');
+			$this->load->model('cart/flexi_cart_model');
 			$this->flexi_cart_model->set_cart_defaults();
 		}
 	}
+	
 	
 	public function &__get($key)
 	{

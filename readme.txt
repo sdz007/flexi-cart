@@ -1,3 +1,8 @@
+Extended the flexi cart implementation to use redis as storage instead of sessions.
+
+This is useful if you need to use the library as part of an API.
+
+
 flexi cart : a shopping cart library for Codeigniter.
 
 Read a list of features available from the flexi cart library.

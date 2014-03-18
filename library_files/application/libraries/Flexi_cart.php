@@ -27,15 +27,15 @@
 */
 
 // Load the flexi cart Lite library to allow it to be extended.
-load_class('Flexi_cart_lite', 'libraries', FALSE);
+// load_class('Flexi_cart_lite', 'libraries', FALSE);
 
 class Flexi_cart extends Flexi_cart_lite
 {
-	public function __construct()
+	public function __construct($params)
 	{
-		parent::__construct();
-		
-		$this->CI->load->model('flexi_cart_model');
+		parent::__construct($params);
+		$this->CI->load->model('cart/flexi_cart_model');
+		$this->CI->flexi_cart_model->__initilize($params);
 	}
 	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	
@@ -220,7 +220,7 @@ class Flexi_cart extends Flexi_cart_lite
 			}
 
 			// Sets / updates manually set currency data.
-			// The currency name (i.e. USD, GBP), symbol (i.e. £) and the exchange rate can all be manually updated.
+			// The currency name (i.e. USD, GBP), symbol (i.e. ï¿½) and the exchange rate can all be manually updated.
 			// This is not typically required if the database currency table is enabled.
 			// The valid currency array keys are 'name', 'exchange_rate', 'symbol', 'symbol_suffix', 'thousand_separator' and 'decimal_separator'. 
 			if (isset($settings_data['set_currency']))
@@ -889,7 +889,7 @@ class Flexi_cart extends Flexi_cart_lite
 	{
 		$this->CI->flexi_cart_model->calculate_cart();
 
-		$this->CI->session->set_userdata(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
+		$this->CI->flexi_cart_storage->store_cart_data(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
 		
 		return TRUE;
 	}
@@ -921,14 +921,14 @@ class Flexi_cart extends Flexi_cart_lite
 			// If the functions return result IS NOT dependent on the response of the 'calculate_cart()' function.
 			if (! $nest_recalc)
 			{				
-				$this->CI->session->set_userdata(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
+				$this->CI->flexi_cart_storage->store_cart_data(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
 					
 				return TRUE;
 			}
 			// If the function return result IS dependent on the response of the 'calculate_cart()' function, nest the status message inside the functions return.
 			else if ($response)
 			{
-				$this->CI->session->set_userdata(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
+				$this->CI->flexi_cart_storage->store_cart_data(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
 				
 				return TRUE;
 			}
@@ -967,7 +967,7 @@ class Flexi_cart extends Flexi_cart_lite
 		$this->CI->flexi_cart_model->set_summary_defaults();
 		$this->CI->flexi_cart_model->set_discount_defaults();
 			
-		$this->CI->session->set_userdata(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
+		$this->CI->flexi_cart_storage->store_cart_data(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
 		
 		$this->CI->flexi_cart_model->set_status_message('cart_emptied', 'config');
 		return TRUE;
@@ -982,7 +982,7 @@ class Flexi_cart extends Flexi_cart_lite
 		$this->CI->flexi->cart_contents = array();
 		
 		// Unset browser cart session data.
-		$this->CI->session->unset_userdata($this->CI->flexi->cart['name']);
+		$this->CI->flexi_cart_storage->delete_cart_data($this->CI->flexi->cart['name']);
 
 		// Reset defaults.
 		$this->CI->flexi->cart_contents = $this->CI->flexi_cart_model->set_cart_defaults();

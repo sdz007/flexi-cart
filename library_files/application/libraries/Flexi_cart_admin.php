@@ -31,11 +31,11 @@ load_class('Flexi_cart_lite', 'libraries', FALSE);
 
 class Flexi_cart_admin extends Flexi_cart_lite
 {
-	public function __construct()
+	public function __construct($params)
 	{
-		parent::__construct();
+		parent::__construct($params);
 
-		$this->CI->load->model('flexi_cart_admin_model');
+		$this->CI->load->model('cart/flexi_cart_admin_model');
 	}	
 	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	
@@ -973,7 +973,7 @@ class Flexi_cart_admin extends Flexi_cart_lite
 		{
 			$this->CI->flexi->cart_contents['settings']['configuration']['order_number'] = $order_number;
 			
-			$this->CI->session->set_userdata(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
+			$this->CI->flexi_cart_storage->store_cart_data(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
 
 			return $order_number;
 		}
@@ -1788,7 +1788,7 @@ class Flexi_cart_admin extends Flexi_cart_lite
 				// Unset any existing status messages and set a new message, then save data to cart session array.		
 				$this->CI->flexi->status_messages = array('public' => array(), 'admin' => array());
 				$this->CI->flexi_cart_admin_model->set_status_message('cart_data_load_successful', 'config');		
-				$this->CI->session->set_userdata(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
+				$this->CI->flexi_cart_storage->store_cart_data(array($this->CI->flexi->cart['name'] => $this->CI->flexi->cart_contents));
 
 				return TRUE;
 			}

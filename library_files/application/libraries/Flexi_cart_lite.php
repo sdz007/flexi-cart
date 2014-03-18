@@ -28,11 +28,10 @@
 
 class Flexi_cart_lite
 {
-	public function __construct()
+	public function __construct($params)
 	{
 		$this->CI =& get_instance();
-		
-		$this->CI->load->model('flexi_cart_lite_model');
+		$this->CI->load->model('cart/flexi_cart_lite_model');
 	}
 
 	public function __call($method, $arguments) 
@@ -2021,7 +2020,7 @@ class Flexi_cart_lite
 	
 	/**
 	 * reward_point_multiplier
-	 * Returns the reward point multiplier that is used to calculate the number of reward points earnt per 1 unit of currency (i.e £1.00).
+	 * Returns the reward point multiplier that is used to calculate the number of reward points earnt per 1 unit of currency (i.e ï¿½1.00).
 	 */
 	public function reward_point_multiplier()
 	{
@@ -2122,7 +2121,7 @@ class Flexi_cart_lite
 	
 	/**
 	 * currency_symbol
-	 * Returns the currency symbol (Example $, €, £) for the users current currency.
+	 * Returns the currency symbol (Example $, ï¿½, ï¿½) for the users current currency.
 	 * If '$internal_value = TRUE', the symbol for the internal currency will be returned.
 	 */
 	public function currency_symbol($internal_value = FALSE)
@@ -2132,7 +2131,7 @@ class Flexi_cart_lite
 	
 	/**
 	 * get_currency_symbol
-	 * Returns the currency symbol (Example $, €, £) of a specified currency.
+	 * Returns the currency symbol (Example $, ï¿½, ï¿½) of a specified currency.
 	 * If '$currency_name' is submitted, the symbol for the submitted currency will be returned.
 	 * If '$internal_value = TRUE', the symbol for the internal currency will be returned.
 	 * Note: The 'currency' table must be enabled via the config file.

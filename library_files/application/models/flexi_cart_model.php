@@ -28,7 +28,8 @@
 
 class Flexi_cart_model extends Flexi_cart_lite_model
 {
-	public function __construct() {}
+	public function __construct() {
+	}
 	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	
 	// CART CRUD FUNCTIONS
@@ -80,7 +81,6 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 					}
 				}
 			}
-			
 			// Set item data to cart array.
 			$this->set_item_data($item, FALSE);
 		}
@@ -89,7 +89,6 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 		{
 			$this->flexi->cart_contents['items'][$row_id][$this->flexi->cart_columns['item_quantity']] += $item_data[$this->flexi->cart_columns['item_quantity']];
 		}		
-				
 		return TRUE;
 	}
 
@@ -372,7 +371,6 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 		}
 		
 		###+++++++++++++++++++++++++++++++++###
-		
 		return $item;
 	}
 
@@ -481,7 +479,6 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 		{
 			$this->flexi->cart_contents['items'][$new_row_id][$column] = $value;
 		}
-
 		return TRUE;		
 	}
 	
@@ -2488,7 +2485,6 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 			}
 			array_multisort($sorted_discounts, SORT_ASC, $discounts);
 		}
-
 		return $discounts;
 	}
 	
@@ -2714,16 +2710,16 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 			
 			$sql_order_by = $tbl_cols_discounts['order_by'].' ASC, '.$tbl_cols_discounts['location'].' ASC, '.$tbl_cols_discounts['zone'].' ASC';
 			
-			$query = $this->db->select($sql_select)
+			$this->db->select($sql_select)
 				->from($tbl_discounts['table'])
 				->join($tbl_discount_methods['table'], $tbl_cols_discounts['method'].' = '.$tbl_discount_methods['columns']['id'])
 				->join($tbl_discount_columns['table'], $tbl_discount_methods['columns']['target_column'].' = '.$tbl_discount_columns['columns']['id'])
 				->join($tbl_discount_calculations['table'], $tbl_discount_methods['columns']['calculation'].' = '.$tbl_discount_calculations['columns']['id'])
 				->join($tbl_group_discounts['table'], $tbl_cols_discounts['group'].' = '.$tbl_group_discounts['columns']['id'], 'left')
 				->join($tbl_group_item_discounts['table'], $tbl_group_discounts['columns']['id'].' = '.$tbl_group_item_discounts['columns']['group'], 'left')
-				->order_by($sql_order_by)
-				->get();
-			
+				->order_by($sql_order_by);
+			$compiled_query = $this->db->_compile_select();
+			$query = 	$this->db->get();
 			return ($query->num_rows() > 0) ? $query->result_array() : FALSE;
 		}
 		
@@ -3620,11 +3616,11 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 				'exchange_rate' => (! empty($this->flexi->cart_defaults['currency']['exchange_rate'])) ? 
 					$this->flexi->cart_defaults['currency']['exchange_rate'] : 1,
 				'symbol' => (! empty($this->flexi->cart_defaults['currency']['symbol'])) ? 
-					$this->flexi->cart_defaults['currency']['symbol'] : '&curren;',
+					$this->flexi->cart_defaults['currency']['symbol'] : '',
 				'symbol_suffix' => (! empty($this->flexi->cart_defaults['currency']['symbol_suffix'])) ? 
 					$this->flexi->cart_defaults['currency']['symbol_suffix'] : FALSE,
 				'thousand_separator' => (! empty($this->flexi->cart_defaults['currency']['thousand_separator'])) ? 
-					$this->flexi->cart_defaults['currency']['thousand_separator'] : ',',
+					$this->flexi->cart_defaults['currency']['thousand_separator'] : '',
 				'decimal_separator' => (! empty($this->flexi->cart_defaults['currency']['decimal_separator'])) ? 
 					$this->flexi->cart_defaults['currency']['decimal_separator'] : '.',
 			);
@@ -3962,7 +3958,7 @@ class Flexi_cart_model extends Flexi_cart_lite_model
 		$this->set_config_settings();
 		
 		// Update cart session.
-		$this->session->set_userdata(array($this->flexi->cart['name'] => $this->flexi->cart_contents));
+		$this->flexi_cart_storage->store_cart_data (array($this->flexi->cart['name'] => $this->flexi->cart_contents));
 		
 		return $this->flexi->cart_contents;
 	}

@@ -196,7 +196,7 @@
 	 * Tax name examples are 'VAT', 'GST', 'HST'.
 	 */ 
 	$config['defaults']['tax']['name'] = 'VAT';
-	$config['defaults']['tax']['rate'] = 20; // 20%
+	$config['defaults']['tax']['rate'] = 0; // 20%
 
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 
@@ -217,22 +217,22 @@
 	 * Note: The config table name for '$config['database']['locations']['table']' and the corresponding '$config['database']['shipping_options']['table']' or
 	 * '$config['database']['tax']['table']' config must be set for this default to work.
 	 */
-	$config['defaults']['shipping']['location'] = array('United Kingdom (EU)');
-	$config['defaults']['tax']['location'] = array('United Kingdom (EU)');
+	$config['defaults']['shipping']['location'] = FALSE;
+	$config['defaults']['tax']['location'] = FALSE;
 	
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 	
 	/**
 	 * Currency default values
 	 * Currency names can be either abbreviations or full names of currencies. Examples: 'GBP' or 'Pound Sterling'.
-	 * It is a best practice to use HTML encoding for currency characters like the Pound and Euro. Example: £ = '&pound;' /  € = '&euro;'.
-	 * Note: To automatically include a space between the symbol and the value (i.e. '£ 9.99'), add &nbsp; after the symbol code (i.e. '&pound;&nbsp;').
+	 * It is a best practice to use HTML encoding for currency characters like the Pound and Euro. Example: ï¿½ = '&pound;' /  ï¿½ = '&euro;'.
+	 * Note: To automatically include a space between the symbol and the value (i.e. 'ï¿½ 9.99'), add &nbsp; after the symbol code (i.e. '&pound;&nbsp;').
 	 */ 
-	$config['defaults']['currency']['name'] = 'GBP';
-	$config['defaults']['currency']['symbol'] = '&pound;';
+	$config['defaults']['currency']['name'] = FALSE;
+	$config['defaults']['currency']['symbol'] = FALSE;
 	$config['defaults']['currency']['symbol_suffix'] = FALSE;
-	$config['defaults']['currency']['thousand_separator'] = ',';
-	$config['defaults']['currency']['decimal_separator'] = '.';
+	$config['defaults']['currency']['thousand_separator'] = FALSE;
+	$config['defaults']['currency']['decimal_separator'] = FALSE;
 
 	###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###	
 
@@ -319,15 +319,15 @@
 
 	/**
 	 * Should reward points be based on the internal value of an item, or should be based on the items current tax rate based price?
-	 * Example: An item is added to the cart costing £20 including 20% tax, the user then ships to a 10% tax zone, so the item now costs £18.33.
-	 * i.e. Remove 20% tax: £20 / 20% = £16.67, then add 10% tax: £16.67 * 10% = £18.33.
-	 * Should the reward points be based on the dynamic tax variable price, or the initial internal £20 price? 'TRUE' = dynamic, 'FALSE' = internal.
+	 * Example: An item is added to the cart costing ï¿½20 including 20% tax, the user then ships to a 10% tax zone, so the item now costs ï¿½18.33.
+	 * i.e. Remove 20% tax: ï¿½20 / 20% = ï¿½16.67, then add 10% tax: ï¿½16.67 * 10% = ï¿½18.33.
+	 * Should the reward points be based on the dynamic tax variable price, or the initial internal ï¿½20 price? 'TRUE' = dynamic, 'FALSE' = internal.
 	 */
 	$config['defaults']['configuration']['dynamic_reward_points'] = TRUE;
 
 	/**
 	 * How many reward points are awarded per 1.00 currency unit of an items price?
-	 * Example: A multiplier of 10 is (10 x £1.00) = 10 reward points. Therefore, an item priced at £100 would be worth 1000 reward points.
+	 * Example: A multiplier of 10 is (10 x ï¿½1.00) = 10 reward points. Therefore, an item priced at ï¿½100 would be worth 1000 reward points.
 	 * Reward points are always rounded to the nearest whole number.
 	 * Reward points can be manually defined when adding items to the cart.
 	 */
@@ -335,7 +335,7 @@
 	
 	/**
 	 * How much is each reward point worth as a currency value when converted to a reward voucher?
-	 * Example: If 250 reward points were converted using a multiplier of £0.01 per point, the reward voucher would be worth £2.50 (250 x 0.01).
+	 * Example: If 250 reward points were converted using a multiplier of ï¿½0.01 per point, the reward voucher would be worth ï¿½2.50 (250 x 0.01).
 	 */
 	$config['defaults']['configuration']['reward_voucher_multiplier'] = 0.01;
 	
@@ -417,7 +417,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If the 'Location Type' lookup table is enabled, the 'Locations' table must be too.
 	 */ 
-	$config['database']['location_type']['table'] = 'location_type';
+	$config['database']['location_type']['table'] = FALSE;
 	$config['database']['location_type']['columns']['id'] = 'loc_type_id';
 	$config['database']['location_type']['columns']['parent'] = 'loc_type_parent_fk';
 	$config['database']['location_type']['columns']['name'] = 'loc_type_name';
@@ -431,7 +431,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If the 'Locations' lookup table is enabled, the 'Location Type' table must be too.
 	 */
-	$config['database']['locations']['table'] = 'locations';
+	$config['database']['locations']['table'] = FALSE;
 	$config['database']['locations']['columns']['id'] = 'loc_id';
 	$config['database']['locations']['columns']['type'] = 'loc_type_fk';
 	$config['database']['locations']['columns']['parent'] = 'loc_parent_fk';
@@ -459,7 +459,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If the 'Location Zones' lookup table is enabled, the 'Locations' and 'Locations Type' tables must be enabled too.
 	 */ 
-	$config['database']['location_zones']['table'] = 'location_zones';
+	$config['database']['location_zones']['table'] = FALSE;
 	$config['database']['location_zones']['columns']['id'] = 'lzone_id';
 	$config['database']['location_zones']['columns']['name'] = 'lzone_name';
 	$config['database']['location_zones']['columns']['description'] = 'lzone_description';
@@ -474,7 +474,7 @@
 	 * All columns are required, to disable lookup of the table (And Shipping Rate table), set ['table'] = FALSE.
 	 * Note: If the 'Shipping' lookup table is enabled, the 'Shipping Rates' table must be too.
 	 */ 
-	$config['database']['shipping_options']['table'] = 'shipping_options';
+	$config['database']['shipping_options']['table'] = FALSE;
 	$config['database']['shipping_options']['columns']['id'] = 'ship_id';
 	$config['database']['shipping_options']['columns']['name'] = 'ship_name';
 	$config['database']['shipping_options']['columns']['description'] = 'ship_description';
@@ -499,7 +499,7 @@
 	 * All columns are required. 
 	 * Note: If the 'Shipping Rate' lookup table is enabled, the 'Shipping' table must be too.
 	 */ 
-	$config['database']['shipping_rates']['table'] = 'shipping_rates';
+	$config['database']['shipping_rates']['table'] = FALSE;
 	$config['database']['shipping_rates']['columns']['id'] = 'ship_rate_id';
 	$config['database']['shipping_rates']['columns']['parent'] = 'ship_rate_ship_fk';
 	$config['database']['shipping_rates']['columns']['value'] = 'ship_rate_value';
@@ -524,7 +524,7 @@
 	 * Note: The item shipping rule table has a one-to-many relationship with an item, i.e. one item can have many shipping rules setup for different locations.
 	 * Therefore, the item shipping data must be setup as a table seperate from the custom user defined item table.
 	 */ 
-	$config['database']['item_shipping']['table'] = 'shipping_item_rules';
+	$config['database']['item_shipping']['table'] = FALSE;
 	$config['database']['item_shipping']['columns']['id'] = 'ship_item_id';
 	$config['database']['item_shipping']['columns']['item'] = 'ship_item_item_fk';
 	$config['database']['item_shipping']['columns']['location'] = 'ship_item_location_fk';
@@ -542,7 +542,7 @@
 	 *
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE.
 	 */ 
-	$config['database']['tax']['table'] = 'tax';
+	$config['database']['tax']['table'] = FALSE;
 	$config['database']['tax']['columns']['id'] = 'tax_id';
 	$config['database']['tax']['columns']['location'] = 'tax_location_fk';
 	$config['database']['tax']['columns']['zone'] = 'tax_zone_fk';
@@ -567,7 +567,7 @@
 	 * Note: The item tax table has a one-to-many relationship with an item, i.e. one item can have many tax rates setup for different locations.
 	 * Therefore, the item tax data must be setup as a table seperate from the custom user defined item table.
 	 */ 
-	$config['database']['item_tax']['table'] = 'tax_item_rates';
+	$config['database']['item_tax']['table'] = FALSE;
 	$config['database']['item_tax']['columns']['id'] = 'tax_item_id';
 	$config['database']['item_tax']['columns']['item'] = 'tax_item_item_fk';
 	$config['database']['item_tax']['columns']['location'] = 'tax_item_location_fk';
@@ -589,7 +589,7 @@
 	 * !IMPORTANT NOTE: If the stock data columns are included in a user defined item table, the 'id' column below should be set to FALSE as the 
 	 * 'item' column will become the primary key column.
 	 */
-	$config['database']['item_stock']['table'] = 'item_stock';
+	$config['database']['item_stock']['table'] = FALSE;
 	$config['database']['item_stock']['columns']['id'] = 'stock_id'; // !IMPORTANT NOTE: See above warning when setting this column.
 	$config['database']['item_stock']['columns']['item'] = 'stock_item_fk';
 	$config['database']['item_stock']['columns']['quantity'] = 'stock_quantity';
@@ -603,7 +603,7 @@
 	 *
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE.
 	 */ 
-	$config['database']['currency']['table'] = 'currency';
+	$config['database']['currency']['table'] = FALSE;
 	$config['database']['currency']['columns']['id'] = 'curr_id';
 	$config['database']['currency']['columns']['name'] = 'curr_name';
 	$config['database']['currency']['columns']['exchange_rate'] = 'curr_exchange_rate';
@@ -628,7 +628,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */ 
-	$config['database']['discounts']['table'] = 'discounts';
+	$config['database']['discounts']['table'] = 'cart_discounts';
 	$config['database']['discounts']['columns']['id'] = 'disc_id'; 
 	$config['database']['discounts']['columns']['type'] = 'disc_type_fk';
 	$config['database']['discounts']['columns']['method'] = 'disc_method_fk';
@@ -668,7 +668,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */ 
-	$config['database']['discount_groups']['table'] = 'discount_groups';
+	$config['database']['discount_groups']['table'] = 'cart_discount_groups';
 	$config['database']['discount_groups']['columns']['id'] = 'disc_group_id'; 
 	$config['database']['discount_groups']['columns']['name'] = 'disc_group'; 
 	$config['database']['discount_groups']['columns']['status'] = 'disc_group_status'; 
@@ -682,7 +682,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */
-	$config['database']['discount_group_items']['table'] = 'discount_group_items';
+	$config['database']['discount_group_items']['table'] = 'cart_discount_group_items';
 	$config['database']['discount_group_items']['columns']['id'] = 'disc_group_item_id'; 
 	$config['database']['discount_group_items']['columns']['group'] = 'disc_group_item_group_fk'; 
 	$config['database']['discount_group_items']['columns']['item'] = 'disc_group_item_item_fk'; 
@@ -698,7 +698,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */
-	$config['database']['discount_methods']['table'] = 'discount_methods';
+	$config['database']['discount_methods']['table'] = 'cart_discount_methods';
 	$config['database']['discount_methods']['columns']['id'] = 'disc_method_id'; 
 	$config['database']['discount_methods']['columns']['type'] = 'disc_method_type_fk'; 
 	$config['database']['discount_methods']['columns']['target_column'] = 'disc_method_column_fk'; 
@@ -716,7 +716,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */
-	$config['database']['discount_types']['table'] = 'discount_types';
+	$config['database']['discount_types']['table'] = 'cart_discount_types';
 	$config['database']['discount_types']['columns']['id'] = 'disc_type_id'; 
 	$config['database']['discount_types']['columns']['type'] = 'disc_type'; 
 
@@ -733,7 +733,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */
-	$config['database']['discount_calculation']['table'] = 'discount_calculation';
+	$config['database']['discount_calculation']['table'] = 'cart_discount_calculation';
 	$config['database']['discount_calculation']['columns']['id'] = 'disc_calculation_id'; 
 	$config['database']['discount_calculation']['columns']['calculation'] = 'disc_calculation'; 
 
@@ -750,7 +750,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */
-	$config['database']['discount_columns']['table'] = 'discount_columns';
+	$config['database']['discount_columns']['table'] = 'cart_discount_columns';
 	$config['database']['discount_columns']['columns']['id'] = 'disc_column_id'; 
 	$config['database']['discount_columns']['columns']['target_column'] = 'disc_column'; 
 
@@ -764,7 +764,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Discount' tables must be enabled too.
 	 */
-	$config['database']['discount_tax_methods']['table'] = 'discount_tax_methods';
+	$config['database']['discount_tax_methods']['table'] = 'cart_discount_tax_methods';
 	$config['database']['discount_tax_methods']['columns']['id'] = 'disc_tax_method_id'; 
 	$config['database']['discount_tax_methods']['columns']['method'] = 'disc_tax_method'; 
 
@@ -782,7 +782,7 @@
 	 *
 	 * The table must be enabled if any cart data is to be saved as an order using flexi cart. However, to disable the table, set ['table'] = FALSE. 
 	 */ 
-	$config['database']['order_summary']['table'] = 'order_summary';
+	$config['database']['order_summary']['table'] = 'cart_order_summary';
 	$config['database']['order_summary']['columns']['order_number'] = 'ord_order_number';
 	$config['database']['order_summary']['columns']['cart_data'] = 'ord_cart_data_fk';
 	$config['database']['order_summary']['columns']['user'] = 'ord_user_fk';
@@ -836,7 +836,7 @@
 	 *
 	 * The table must be enabled if any cart data is to be saved as an order using flexi cart. However, to disable the table, set ['table'] = FALSE. 
 	 */ 
-	$config['database']['order_details']['table'] = 'order_details';
+	$config['database']['order_details']['table'] = 'cart_order_details';
 	$config['database']['order_details']['columns']['id'] = 'ord_det_id';
 	$config['database']['order_details']['columns']['order_number'] = 'ord_det_order_number_fk';
 	$config['database']['order_details']['columns']['cart_row_id'] = 'ord_det_cart_row_id';
@@ -886,7 +886,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE. 
 	 * Note: If this table is enabled, all 'Order' tables must be enabled too.
 	 */
-	$config['database']['order_status']['table'] = 'order_status';
+	$config['database']['order_status']['table'] = FALSE;
 	$config['database']['order_status']['columns']['id'] = 'ord_status_id';
 	$config['database']['order_status']['columns']['status'] = 'ord_status_description';
 	$config['database']['order_status']['columns']['cancelled'] = 'ord_status_cancelled';
@@ -919,7 +919,7 @@
 	 */ 
 	 
 	/* !IMPORTANT NOTE: DO NOT CHANGE ANY VALUES BETWEEN THE 'START' AND THE 'END' COMMENTS - UNLESS DISABLING THE TABLE | START */
-	$config['database']['reward_points']['table'] = $config['database']['order_summary']['table'];
+	$config['database']['reward_points']['table'] = FALSE;//$config['database']['order_summary']['table'];
 	$config['database']['reward_points']['join_table'] = $config['database']['order_details']['table'];
 	$config['database']['reward_points']['join'] = $config['database']['order_summary']['columns']['order_number'].' = '.$config['database']['order_details']['columns']['order_number'];
 	$config['database']['reward_points']['columns']['id'] = $config['database']['order_details']['columns']['id'];
@@ -970,7 +970,7 @@
 	 * All columns are required, to disable lookup of the table, set ['table'] = FALSE.
 	 * Note: If this table is enabled, the 'Reward Points' and all 'Discount' and 'Order' tables must be enabled too.
 	 */ 
-	$config['database']['reward_points_converted']['table'] = 'reward_points_converted';
+	$config['database']['reward_points_converted']['table'] = FALSE;//'cart_reward_points_converted';
 	$config['database']['reward_points_converted']['columns']['id'] = 'rew_convert_id';
 	$config['database']['reward_points_converted']['columns']['reward'] = 'rew_convert_ord_detail_fk';
 	$config['database']['reward_points_converted']['columns']['discount'] = 'rew_convert_discount_fk';

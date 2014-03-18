@@ -2103,7 +2103,7 @@ class Flexi_cart_admin_model extends Flexi_cart_lite_model
 		###++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++###
 
 		// Update cart session.
-		$this->session->set_userdata(array($this->flexi->cart['name'] => $this->flexi->cart_contents));
+		$this->flexi_cart_storage->store_cart_data (array($this->flexi->cart['name'] => $this->flexi->cart_contents));
 		
 		// Complete SQL transaction.
 		$this->db->trans_complete();
@@ -2178,7 +2178,7 @@ class Flexi_cart_admin_model extends Flexi_cart_lite_model
 		###+++++++++++++++++++++++++++++++++###
 
 		// Update cart session.
-		$this->session->set_userdata(array($this->flexi->cart['name'] => $this->flexi->cart_contents));
+		$this->flexi_cart_storage->store_cart_data (array($this->flexi->cart['name'] => $this->flexi->cart_contents));
 		
 		// Complete SQL transaction.
 		$this->db->trans_complete();
@@ -2299,7 +2299,7 @@ class Flexi_cart_admin_model extends Flexi_cart_lite_model
 				// If the cart is later resaved, the cart id will be used to update the existing database row, rather than insert a new row.
 				$cart_data_id = $this->flexi->cart_contents['settings']['configuration']['cart_data_id'] = $this->db->insert_id();
 				
-				$this->session->set_userdata(array($this->flexi->cart['name'] => $this->flexi->cart_contents));
+				$this->flexi_cart_storage->store_cart_data (array($this->flexi->cart['name'] => $this->flexi->cart_contents));
 			}
 			
 			// Serialize the cart array so it can be saved to the database.
@@ -2450,7 +2450,7 @@ class Flexi_cart_admin_model extends Flexi_cart_lite_model
 					$this->flexi->cart_contents['settings']['configuration']['cart_data_id'] = FALSE;
 					
 					// Update cart session.
-					$this->session->set_userdata(array($this->flexi->cart['name'] => $this->flexi->cart_contents));
+					$this->flexi_cart_storage->store_cart_data (array($this->flexi->cart['name'] => $this->flexi->cart_contents));
 					
 					break;
 				}
