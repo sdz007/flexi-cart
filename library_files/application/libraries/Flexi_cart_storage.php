@@ -3,25 +3,12 @@
 * Name: flexi cart lite library
 *
 * Author: 
-* Rob Hussey
-* flexicart@haseydesign.com
+* Sheldon Dsouza
+* sheldon@tastykhana.com
 * haseydesign.com/flexicart
 *
-* Copyright 2012 Rob Hussey
-* 
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-* 
-* http://www.apache.org/licenses/LICENSE-2.0
-* 
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
 *
-* Description: A full shopping cart library
+* Description: Redis storage instead of codeigniter sessions
 * Created: 01/01/2012
 * Requirements: PHP5 or above and Codeigniter 2.0+
 */
